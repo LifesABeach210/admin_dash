@@ -8,6 +8,9 @@ import { themeSettings } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { Box, useMediaQuery } from "@mui/material";
+import Products from './page/Products';
+import Customers from './page/Customers'
+import Transactions from './page/Transactions'
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -23,6 +26,9 @@ function App() {
                 element={<Navigate to="/dashboard" replace />}
               />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route element={<Products/>} path="/products"></Route>
+              <Route element={<Customers/>} path="/customers"></Route>
+              <Route element={<Transactions/>} path="/transactions"></Route>
             </Route>
           </Routes>
         </ThemeProvider>

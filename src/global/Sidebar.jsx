@@ -31,7 +31,7 @@ import {
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../componets/FlexBetween";
-
+const { profileImg } = "/profileimage.png";
 const NavItems = [
   {
     text: "Dashboard",
@@ -50,7 +50,7 @@ const NavItems = [
     icon: <Groups2Outlined />,
   },
   {
-    text: "Transations",
+    text: "Transactions",
     icon: <ReceiptLongOutlined />,
   },
   {
@@ -96,11 +96,13 @@ export const Sidebar = ({
   isSidebarOpen,
   setIsSidebarOpen,
   isNonMobile,
+  user,
 }) => {
   const { pathname } = useLocation();
   const nav = useNavigate();
   const theme = useTheme();
   const [active, setActive] = useState("");
+
   useEffect(() => {
     setActive(pathname.substring(1));
     console.log(active, "PATHNAME_ACTIVE");
@@ -125,17 +127,21 @@ export const Sidebar = ({
           open={() => setIsSidebarOpen(!isSidebarOpen)} // Not suppose to be opening sidebar/closing
         >
           <Box width="100%" m=".5rem 1rem 0rem 2rem">
-            <FlexBetween color={theme.palette.secondary.main}>
-              <Box gap="0.5rem" alignItems="center" display="flex">
-                <Typography fontWeight="bold" variant="h4">
-                  VisonOfEcom
-                </Typography>
-              </Box>
+            <Box>
+              <FlexBetween color={theme.palette.secondary.main}>
+                <Box gap="0.5rem" alignItems="center" display="flex">
+                  <Typography fontWeight="bold" variant="h4">
+                    VisonOfEcom
+                  </Typography>
+                </Box>
 
-              <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                <ChevronLeft sx={{ mr: "2rem" }} />
-              </IconButton>
-            </FlexBetween>
+                <IconButton
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                >
+                  <ChevronLeft sx={{ mr: "2rem" }} />
+                </IconButton>
+              </FlexBetween>
+            </Box>
           </Box>
 
           <List>
@@ -188,6 +194,54 @@ export const Sidebar = ({
               );
             })}
           </List>
+
+          <Box
+            mb="auto"
+            mt="auto"
+           
+            position="flex"
+       
+          >
+            <Divider />
+            <FlexBetween
+              textTransform="none"
+              gap="1rem"
+              m="1.5rem 2rem 0 3rem"
+              mt='auto'
+              mb='auto'
+            >
+              <Box
+                component="img"
+                alt="profile"
+                src="/profileimg.png"
+                height="40px"
+                width="40px"
+                borderRadius="50%"
+                sx={{ objectFit: "cover" }}
+              />
+              <Box textAlign="left">
+                <Typography
+                  fontWeight="bold"
+                  fontSize="0.9rem"
+                  sx={{ color: theme.palette.secondary[100] }}
+                >
+                 
+                </Typography>
+                <Typography
+                  fontSize="0.8rem"
+                  sx={{ color: theme.palette.secondary[200] }}
+                >
+               
+                </Typography>
+              </Box>
+              <SettingsOutlined
+                sx={{
+                  color: theme.palette.secondary[300],
+                  fontSize: "25px ",
+                }}
+              />
+            </FlexBetween>
+          </Box>
         </Drawer>
       )}
     </Box>
