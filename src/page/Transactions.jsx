@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { useGetTransactionsQuery } from "../redux/api";
 import Header from "../componets/Header";
 import { Box, useTheme } from "@mui/material";
+import DataGridCustomToolbar from '../componets/DataGridCustomToolbar'
+
 const Transactions = () => {
   const theme = useTheme();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState("");
   const [search, setSearch] = useState("");
+  const [searchInput,setSearchInput] = useState('')
   const { data, isLoading } = useGetTransactionsQuery({
     page,
     pageSize,
@@ -82,7 +85,24 @@ const Transactions = () => {
         }}
         height="80vh"
       >
-        
+        <DataGrid 
+            loading={isLoading || !data}
+            getRowId={(row) => row._id}
+            rows={data && data.transaction||[]}
+            columns={columns}
+            rowCount={data &&data.total||0}
+            rowsPerPageOptions = {[20,50,100]}
+            pagination
+            page={page}
+            pageSize={pageSize}
+            paginationMode = 'server'
+            sortingMode="server"
+            onPageChange={(newPage)=>setPage(newPage)}
+            onPageSizeChange = {(newPageSize)=>setSort(newPageSize)}
+            onSortModelChange={(newPageSort)=>setSort(...newPageSort)}
+            components = {{Toolbar:DataGridCustomToolbar}}
+            componentsProps = {{toolbar:{searchInput,setSearchInput,setSearch}}}
+        />
       </Box>
     </Box>
   );
